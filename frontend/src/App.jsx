@@ -1,5 +1,5 @@
 import './App.css'
-import { Router } from 'react-browser-router'
+import { Router } from 'react-router-dom'
 import FeaturedFoods from './components/FeaturedFoods'
 import FilterMenu from './components/FilteredMenu'
 
