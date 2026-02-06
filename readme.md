@@ -4,7 +4,7 @@
 
 1. Download Node.js [here](https://nodejs.org/en/download) if you do not already have it on your machine
 2. Clone repository locally and enter the following into your terminal: 
-`cd frontend`  
+`cd frontend`    
 `npm install`  
 `npm run dev`  
 3. Go to the address specified in output to view website locally
@@ -14,7 +14,7 @@
 1. Download Python [here](https://www.python.org/downloads/) if you do not already have it on your machine
 2. Clone repository locally and enter the following into your terminal: 
 
-`cd backend`
+`cd backend`  
 On Mac/Linux: `source venv/bin/activate`  
 On Windows: `venv\Scripts\activate`  
 `pip install -r requirements.txt`  
