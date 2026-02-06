@@ -15,8 +15,10 @@
 2. Clone repository locally and enter the following into your terminal: 
 
 `cd backend`  
-On Mac/Linux: `source venv/bin/activate`  
-On Windows: `venv\Scripts\activate`  
+On Mac/Linux: 
+`source venv/bin/activate`  
+On Windows: 
+`venv\Scripts\activate`  
 `pip install -r requirements.txt`  
 
 3. To run the flask app to view endpoint responses in your browser run `flask run` and visit the address specified in the output. From there you can append your endpoint's route to the address to view its response body
