@@ -35,7 +35,7 @@ def get_menu(filters: list[str]) -> list[dict]:
 @app.route("/fiber")
 def get_fiber_sources() -> list[dict]:
     """
-    Gets all high fiber foods for a give meal period (6g fiber or more per 100 calories)
+    Gets all high fiber foods for a give meal period (3g fiber or more per 100 calories)
     ;return: list of all high-fiber items as dicts specifying calories, portion, nutrients, id, customAllergens, nutrients, and location
     """
 
