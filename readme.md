@@ -26,7 +26,7 @@ On Windows:
 
 ## Contributing
 
-To contribute a feature, please make a new branch(exmpl_name: feature/fiber-endpoint)and  checkout the branch locally before making changes. Then once you are done you can make a pullrequest with that branch, link it to a specific Github Issue, and the team lead will review, merge and delete that branch
+To contribute a feature, please make a new branch(example name: `feature/fiber-endpoint`)and  checkout the branch locally before making changes. Then once you are done you can make a pullrequest with that branch, link it to a specific Github Issue, and the team lead will review, merge and delete that branch
 
 
 
