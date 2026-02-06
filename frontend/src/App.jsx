@@ -1,7 +1,7 @@
 import './App.css'
 import { Router } from 'react-browser-router'
 import FeaturedFoods from './components/FeaturedFoods'
-import FilterMenu from './components/FilterMenu'
+import FilterMenu from './components/FilteredMenu'
 
 function App() {
 

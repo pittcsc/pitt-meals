@@ -35,15 +35,22 @@ def get_menu(filters: list[str]) -> list[dict]:
 @app.route("/fiber")
 def get_fiber_sources() -> list[dict]:
     """
-    Gets all high fiber foods for a give meal period (8g fiber or more per 100 calories)
+    Gets all high fiber foods for a give meal period (6g fiber or more per 100 calories)
     ;return: list of all high-fiber items as dicts specifying calories, portion, nutrients, id, customAllergens, nutrients, and location
     """
 
     # TODO: Vincent
 
     return {
-        "example1": {"fiber": 5, "serving_size": "2oz", "calories": 100},
-        "example2": {"fiber": 10, "serving_size": "100g", "calories": 100},
+        "example1": {
+            "fiber": 6,
+            "portion": "2oz",
+            "calories": 100,
+            "location": "eatery",
+            "nutrients": {},
+            "customAllergens": [],
+        },
+        "example2": {"fiber": 10, "portion": "100g", "calories": 100},
     }
 
 
@@ -57,8 +64,22 @@ def get_protein_sources() -> dict:
     # TODO: Jayson
 
     return {
-        "example1": {"protein": 30, "serving_size": "2oz", "calories": 100},
-        "example2": {"protein": 20, "serving_size": "100g", "calories": 100},
+        "example1": {
+            "protein": 10,
+            "portion": "100ml",
+            "calories": 100,
+            "location": "eatery",
+            "nutrients": {},
+            "customAllergens": [],
+        },
+        "example2": {
+            "protein": 12,
+            "portion": "2oz",
+            "calories": 100,
+            "location": "eatery",
+            "nutrients": {},
+            "customAllergens": [],
+        },
     }
 
 
@@ -72,6 +93,20 @@ def get_carb_sources() -> dict:
     # TODO: Steven
 
     return {
-        "example1": {"protein": 30, "serving_size": "100mL", "calories": 100},
-        "example2": {"protein": 40, "serving_size": "2oz", "calories": 100},
+        "example1": {
+            "carbs": 20,
+            "portion": "30g",
+            "calories": 100,
+            "location": "eatery",
+            "nutrients": {},
+            "customAllergens": [],
+        },
+        "example2": {
+            "fiber": 10,
+            "portion": "2oz",
+            "calories": 100,
+            "location": "eatery",
+            "nutrients": {},
+            "customAllergens": [],
+        },
     }

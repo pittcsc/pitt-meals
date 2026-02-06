@@ -1,7 +1,7 @@
 import React from "react"
-import mockData from "../mockData/featuredFoods.json"
+import mockData from "../../mockData/menu.json"
 
-const FeaturedFoods = () => {
+const FilteredMenu = () => {
 
     //TODO: James
     //This page is the main menu where users will see a complete list of foods
@@ -14,4 +14,4 @@ const FeaturedFoods = () => {
     )
 }
 
-export default FeaturedFoods
+export default FilteredMenu

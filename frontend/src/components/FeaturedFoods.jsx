@@ -1,5 +1,5 @@
 import React from "react"
-import mockData from "../mockData/filterMenu.json"
+import mockData from "../../mockData/featuredFoods.json"
 
 const FeaturedFoods = () => {
 
