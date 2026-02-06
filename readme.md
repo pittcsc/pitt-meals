@@ -4,9 +4,9 @@
 
 1. Download Node.js [here](https://nodejs.org/en/download) if you do not already have it on your machine
 2. Clone repository locally and enter the following into your terminal: 
-`cd frontend`
-`npm install`
-`npm run dev`
+`cd frontend`  
+`npm install`  
+`npm run dev`  
 3. Go to the address specified in output to view website locally
 
 
@@ -15,9 +15,9 @@
 2. Clone repository locally and enter the following into your terminal: 
 
 `cd backend`
-On Mac/Linux: `source venv/bin/activate`
-On Windows: `venv\Scripts\activate`
-`pip install -r requirements.txt`
+On Mac/Linux: `source venv/bin/activate`  
+On Windows: `venv\Scripts\activate`  
+`pip install -r requirements.txt`  
 
 3. To run the flask app to view endpoint responses in your browser run `flask run` and visit the address specified in the output. From there you can append your endpoint's route to the address to view its response body
 
