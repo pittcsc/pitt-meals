@@ -15,6 +15,8 @@ app = Flask(__name__)
 LOCATIONS_URL = "https://api.dineoncampus.com/v1/locations/status?site_id=5e6fcc641ca48e0cacd93b04&platform="
 PERIODS_URL = "https://api.dineoncampus.com/v1/location/{location_id}/periods?platform=0&date={date_str}"
 
+REQUEST_HEADERS = {"User-Agent": "Chrome/103.0.5026.0"}
+
 
 @app.route("/")
 def menu():
