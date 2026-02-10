@@ -12,6 +12,9 @@ app = Flask(__name__)
 # you will have to manually change only date via concatenation (any format is fine but YYYY-MM-DD is preferrred) to the current date
 # use datetime.today().strftime('%Y-%m-%d') to get the current date
 
+LOCATIONS_URL = "https://api.dineoncampus.com/v1/locations/status?site_id=5e6fcc641ca48e0cacd93b04&platform="
+PERIODS_URL = "https://api.dineoncampus.com/v1/location/{location_id}/periods?platform=0&date={date_str}"
+
 
 @app.route("/")
 def menu():
