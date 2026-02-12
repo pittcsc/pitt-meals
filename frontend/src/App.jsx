@@ -1,16 +1,18 @@
 import './App.css'
-import { Router } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import FeaturedFoods from './components/FeaturedFoods'
 import FilterMenu from './components/FilteredMenu'
 
 function App() {
 
-
-  return <Router>
-    <Route path="/menu"></Route>
-    <Route path="/featured-foods"></Route>
-  </Router>
-    
+{/* should this be using <Router> or <BrowserRouter>? (official docs use <BrowserRouter>) */}
+  return <BrowserRouter>
+      
+      <Routes>
+        <Route path="/menu" element={<FilterMenu/>}></Route>
+        <Route path="/featured-foods" element={<FeaturedFoods/>}></Route> 
+      </Routes>
+  </BrowserRouter>
   
 }
 

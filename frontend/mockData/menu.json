@@ -1,1 +1,39 @@
-{}
+
+[
+    {
+        "name": "bad for any restrictions",
+        "fiber": "6",
+        "portion": "2oz",
+        "calories": "100",
+        "location": "eatery",
+        "nutrients": {},
+        "customAllergens": []
+    },
+    {
+        "name": "halal food",
+        "fiber": "6",
+        "portion": "2oz",
+        "calories": "100",
+        "location": "eatery",
+        "nutrients": {},
+        "customAllergens": ["halal"]
+    },
+    {
+        "name": "gluten free food",
+        "fiber": "6",
+        "portion": "2oz",
+        "calories": "100",
+        "location": "eatery",
+        "nutrients": {},
+        "customAllergens": ["gluten free", "halal"]
+    },
+    {
+        "name": "dairy free food",
+        "fiber": "6",
+        "portion": "2oz",
+        "calories": "100",
+        "location": "eatery",
+        "nutrients": {},
+        "customAllergens": ["dairy free"]
+    }
+]
