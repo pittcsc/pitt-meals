@@ -45,18 +45,27 @@ def get_fiber_sources() -> list[dict]:
     """
 
     # TODO: Vincent
+    date = datetime.today().strftime('%Y-%m-%d')
+    url = f"https://apiv4.dineoncampus.com/locations/6779562d351d53052c3b5728/menu?date={date}&period=698e5bfac78898eabbdce620"
+    
+    response = requests.get(url, headers=REQUEST_HEADERS)
 
-    return {
-        "example1": {
-            "fiber": 6,
-            "portion": "2oz",
-            "calories": 100,
-            "location": "eatery",
-            "nutrients": {},
-            "customAllergens": [],
-        },
-        "example2": {"fiber": 10, "portion": "100g", "calories": 100},
-    }
+    if response.status_code != 200:
+        return {"error": f"{response.status_code}"}
+
+    return response.json()
+
+    # return {
+    #     "example1": {
+    #         "fiber": 6,
+    #         "portion": "2oz",
+    #         "calories": 100,
+    #         "location": "eatery",
+    #         "nutrients": {},
+    #         "customAllergens": [],
+    #     },
+    #     "example2": {"fiber": 10, "portion": "100g", "calories": 100},
+    # }
 
 
 @app.route("/protein")
