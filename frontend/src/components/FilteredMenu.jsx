@@ -12,21 +12,28 @@ const FilteredMenu = () => {
         <>
             <h1 id = "header">Pitt Meals</h1> {/*placeholer title until we make a real one */}
             <div>
-                    <FilterMenu></FilterMenu>            
+                    <FilterMenu></FilterMenu>       
             </div>
         </>
     )
    
 }
+
+//wrapper component for filter menu
 const FilterMenu = () => {
     const differentFilters = [
-        {label: "Dairy Free"},
-        {label: "Gluten free"}, 
-        {label: "Halal"},
-        {label: "Nut Free"},
-        {label: "Shellfish Free"},
-        {label:  "Vegan"},
-        {label: "Vegetarian"}]
+        {label: "Vegan"},
+        {label: "Vegetarian"}, 
+        {label: "Gluten-Free"},
+        {label: "High-Protein"},
+        {label: "Kosher"},
+        {label: "Halal"},]
+    
+    const [[selectedFilters], updateFilters] = useState([""])
+    const addFilters = ({newFilter}) => {
+        updateFilters(selectedFilters => selectedFilters.push(newFilter))
+    }
+
     const content = <>{
         differentFilters.map(filter => (
             <FiltersButton key={filter.label}>{filter.label}</FiltersButton>
@@ -39,45 +46,51 @@ const FilterMenu = () => {
     return(
     <div>
         <MainFilterButton toggle = {toggle} open ={open} keyword = "Filters"></MainFilterButton>
-        <AllFilters open = {open}>{content}</AllFilters>
+        <AllFilters open = {open} addFilters={addFilters}>{content}</AllFilters>
+        <ListOfFoods keywords = {selectedFilters}></ListOfFoods>
     </div>
     )   
 }
+
+//filter button
 const MainFilterButton = ({toggle, open, keyword}) => {
     return(
         <button onClick={toggle}>{keyword}</button>
     )
 }
-const AllFilters = ({open, children}) => {
+
+//wrapper component for all of the filters
+const AllFilters = ({open, children, addFilters}) => {
     return (
-        <div>
+        <div addFilters = {addFilters}>
             {children}
         </div>
         
     )
 }
-const FiltersButton = ({children}) => {
-    
+
+//button for each type of filter
+const FiltersButton = ({children, addFilters}) => {
     return(
-        <button>{children}</button>
+        <button onClick={addFilters}>{children}</button>
     )
 }
 
-
-
-const ParseForKeyword = ({keyword}) => {
-    var goodData=[]
-    for(var i=0;i<mockData.length;i++){
-        for(var j = 0;j<mockData[i].customAllergens.length;j++) {
-            if (mockData[i].customAllergens[j]==keyword) {
-                goodData.push(mockData[i].name)
-            }
-        }  
-    }
-    console.log(goodData)
-        return (<div>
-            {goodData[0]}
-        </div>);
-    
+//displays all of the foods
+const ListOfFoods = ({keywords}) => {
+    return (
+        <>
+            {keywords.map((keyword) => {
+                mockData.map((food) => (
+                    food.customAllergens.map((allergen, index) => {
+                        if (allergen==keyword) {
+                            return(<div key = {index}>{food.name}</div>)
+                        }
+                    })
+                ))
+            })}
+                
+        </>
+    )
 }
 export default FilteredMenu
