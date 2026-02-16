@@ -1,6 +1,7 @@
 from flask import Flask
 import requests
 from datetime import datetime
+from flask import jsonify
 
 app = Flask(__name__)
 
@@ -29,14 +30,54 @@ def menu():
 
 
 @app.route("/menu/<filters>")
-def get_menu(filters: list[str]) -> list[dict]:
+def get_menu(filters: str):
     """
     Gets all food items for a given meal period
     :param filters: list of given filters, when applied should return object only with applicable foods
     ;return: list of all items as dicts specifying calories, portion, nutrients, id, customAllergens, nutrients, and location
     """
+    # Get current date
+    curr_date = datetime.today().strftime('%Y-%m-%d')
+    
+    # Get meal period from filters
+    seperate_filters = filters.split(",")
+
+    # Set default meal period to breakfast if user doesn't specify
+    meal_period = "breakfast"
+    
+    # Itererate through filters, checking if it is a valid meal period, if so set store that value as the meal period
+    for i in seperate_filters:
+        i = i.strip().lower()
+        if i in ["breakfast", "lunch", "dinner"]:
+            meal_period = i
+    
+    # GET Request to LOCATIONS_URL to get all locations
+    location_request = requests.get(LOCATIONS_URL, headers=REQUEST_HEADERS)
+    
+    # Throw error if request was unsuccessful
+    location_request.raise_for_status()
+
+    # Convert json response to a python data structures
+    location_data = location_request.json()
+    
+    # Get list of all locations from the data
+    locations_list = location_data["locations"]
+
+    # Find the eatery in the list of locations, if it doesn't exist throw an error
+    for loc in locations_list:
+        if loc.get("name") == "The Eatery":
+            eatery = loc
+            break
+    
+    # If eatery is found, return the date, meal period, and eatery information as a json response
+    return jsonify({
+        "date": curr_date,
+        "meal_period": meal_period,
+        "eatery": eatery
+    })
+
     # TODO: Aarav
-    return {}
+    
 
 
 @app.route("/fiber")
