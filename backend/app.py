@@ -15,9 +15,7 @@ app = Flask(__name__)
 LOCATIONS_URL = "https://api.dineoncampus.com/v1/locations/status?site_id=5e6fcc641ca48e0cacd93b04&platform="
 PERIODS_URL = "https://api.dineoncampus.com/v1/location/{location_id}/periods?platform=0&date={date_str}"
 
-REQUEST_HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
-}
+REQUEST_HEADERS = {"User-Agent": "Chrome/103.0.5026.0"}
 
 
 @app.route("/")
@@ -47,6 +45,16 @@ def get_fiber_sources() -> list[dict]:
     """
 
     # TODO: Vincent
+
+    date = datetime.today().strftime("%Y-%m-%d")
+    url = f"https://apiv4.dineoncampus.com/locations/6779562d351d53052c3b5728/menu?date={date}&period=699636e783e595243b4f4b2a"
+
+    response = requests.get(url, headers=REQUEST_HEADERS)
+
+    if response.status_code != 200:
+        return {"error": f"{response.status_code}"}
+
+    return response.json()
 
     return {
         "example1": {
