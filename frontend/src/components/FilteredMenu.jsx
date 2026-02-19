@@ -41,7 +41,7 @@ const FilterMenu = () => {
         ))
     } </>
 
-    const [filters, setFilters] = useState([])
+    const [filters, setFilters] = useState([""])
     const addFilters = (newFilter) => {
         if(!(filters.includes(newFilter)))
         {
@@ -86,18 +86,23 @@ const FilterMenu = () => {
 
 
 //displays all of the foods
-const ListOfFoods = ({keywords, filter}) => {
+const ListOfFoods = ({keywords}) => {
     return (
-        <>
-            {keywords.map((keyword) => (
-                mockData.map((food) => (
-                    food.customAllergens.map((allergen, index) => {
-                        if (allergen.toLowerCase()==keyword.toLowerCase()) {
-                            return(<div key = {index}>{food.name}</div>)
+        <>  
+            {
+
+                mockData.map((food, index) => {
+                    var contains = true
+                    keywords.forEach(keyword => {
+                        if(!(food.customAllergens.includes(keyword))) {
+                            contains = false;
                         }
-                    })
-                ))
-            ))}
+                    });
+                    if(contains){
+                        return(<div key = {index}>{food.name}</div>)
+                    }
+                })
+            }
         </>
     )
 }
