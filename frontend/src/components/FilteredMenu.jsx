@@ -47,11 +47,7 @@ const FilterMenu = () => {
         {
             setFilters(filters => [...filters, newFilter])
         }else{
-            setFilters(filters => filters.map(filter => {
-                if(filter!=newFilter){
-                    return filter
-                }
-            }))
+            setFilters(filters => filters.filter(filter => filter!=newFilter))
         }
     }
 
@@ -81,27 +77,27 @@ const FilterMenu = () => {
     <div>
         <MainFilterButton>Filters</MainFilterButton>
         <AllFilters>{content}</AllFilters>
-        <ListOfFoods keywords = {filters}></ListOfFoods>
+        <ListOfFoods keywords = {filters} filter = "Halal"></ListOfFoods>
         {filters}
     </div>
     )   
 }
 
 
+
 //displays all of the foods
-const ListOfFoods = ({keywords}) => {
+const ListOfFoods = ({keywords, filter}) => {
     return (
         <>
-            {keywords.map((keyword) => {
+            {keywords.map((keyword) => (
                 mockData.map((food) => (
                     food.customAllergens.map((allergen, index) => {
-                        if (allergen==keyword) {
+                        if (allergen.toLowerCase()==keyword.toLowerCase()) {
                             return(<div key = {index}>{food.name}</div>)
                         }
                     })
                 ))
-            })}
-                
+            ))}
         </>
     )
 }

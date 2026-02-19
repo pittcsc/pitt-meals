@@ -16,7 +16,7 @@
         "calories": "100",
         "location": "eatery",
         "nutrients": {},
-        "customAllergens": ["","halal"]
+        "customAllergens": ["","Halal"]
     },
     {
         "name": "gluten free food",
@@ -25,7 +25,7 @@
         "calories": "100",
         "location": "eatery",
         "nutrients": {},
-        "customAllergens": ["","gluten free", "halal"]
+        "customAllergens": ["","gluten-free", "halal"]
     },
     {
         "name": "dairy free food",
@@ -34,7 +34,7 @@
         "calories": "100",
         "location": "eatery",
         "nutrients": {},
-        "customAllergens": ["","dairy free"]
+        "customAllergens": ["","dairy-free"]
     }, 
     {
         "name": "vegan food",
@@ -52,16 +52,16 @@
         "calories": "100",
         "location": "eatery",
         "nutrients": {},
-        "customAllergens": ["","shellfish free"]
+        "customAllergens": ["","shellfish-free"]
     },
     {
-        "name": "nut free food",
+        "name": "kosher food",
         "fiber": "6",
         "portion": "2oz",
         "calories": "100",
         "location": "eatery",
         "nutrients": {},
-        "customAllergens": ["","nut free", "halal"]
+        "customAllergens": ["", "kosher"]
     },
     {
         "name": "vegetarian food",
