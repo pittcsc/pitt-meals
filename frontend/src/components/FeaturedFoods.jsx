@@ -1,5 +1,7 @@
 import React from "react"
 import mockData from "../../mockData/featuredFoods.json"
+import { useState } from "react";
+
 
 const FeaturedFoods = () => {
 
@@ -8,6 +10,7 @@ const FeaturedFoods = () => {
     // For now, you will read in some mock data that will match the form of the actual data and use that to generate the list
     // Each group should only show the top three foods, but users should be able to expand the list to show more
 
+    
   const [showMoreProtein, setShowMoreProtein] = useState(false)
   const [showMoreCarbs, setShowMoreCarbs] = useState(false)
   const [showMoreFiber, setShowMoreFiber] = useState(false)
@@ -20,7 +23,7 @@ const FeaturedFoods = () => {
   
   return (<>
   <div>
-    <h1>High Protein</h1>   {/*Should I create another component for each list*/}
+    <h1>High Protein</h1>   {/*create a component for each list*/}
     <ul>
       {showMoreProtein ?
         sortedProtein.map(([food, info]) => 
