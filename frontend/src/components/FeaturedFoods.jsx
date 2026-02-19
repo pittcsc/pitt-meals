@@ -12,36 +12,37 @@ const FeaturedFoods = () => {
 
   
   return (<>
-  <div>
-    <ListFoods title="High Protein" data = {mockData} feature={'protein'}></ListFoods>
-    <ListFoods title="High Carb" data = {mockData} feature={'carbs'}></ListFoods>
-    <ListFoods title="High Fiber" data = {mockData} feature={'fiber'}></ListFoods>
-    <ListFoods title="High Calorie" data = {mockData} feature={'calories'}></ListFoods>
-  </div>
+  <div style={{display:'flex', flexDirection:'column'}}>   
+    <ListFoods title="High Protein" data = {mockData} feature={'protein'} unit={'g'}></ListFoods>
+    <ListFoods title="High Carb" data = {mockData} feature={'carbs'} unit={'g'}></ListFoods>
+    <ListFoods title="High Fiber" data = {mockData} feature={'fiber'} unit={'g'}></ListFoods>
+    <ListFoods title="High Calorie" data = {mockData} feature={'calories'} unit={'kcal'}></ListFoods>
+    </div>
 </>)
 
 
 }
 
-const ListFoods = ({title, data, feature}) => {
+const ListFoods = ({title, data, feature, unit}) => {
   const [showMore, setShowMore] = useState(false)
   const sortedList = Object.entries(data).sort(([, a], [, b]) => b?.[feature] - a?.[feature])
-    return(<>
-      <h1>{title}</h1>
+    return(
+    <div style={{padding:30, borderRadius:50, backgroundColor:'#090D11', margin:50, minWidth:500}}>
+      <h1 style={{paddingBottom:20}}>{title}</h1>
       <ul>
         {showMore ?
           sortedList.map(([food, info]) => 
           (
-            <li><h2>{food}: {info?.[feature]}</h2></li>)
+            <li><h2>{food}: {info?.[feature]} {unit}</h2></li>)
           ) :
           sortedList.slice(0,3).map(([food, info]) => 
           (
-            <li><h2>{food}: {info?.[feature]}</h2></li>)
+            <li><h2>{food}: {info?.[feature]} {unit}</h2></li>)
           )
         }
-        <button id="show-more" onClick={() => setShowMore(showMore => !showMore)}>{showMore ? "↑" : "↓"}</button>
+        <button style={{marginTop:20, fontWeight:'bold'}} id="show-more" onClick={() => setShowMore(showMore => !showMore)}>{showMore ? "↑" : "↓"}</button>
       </ul>
-    </>
+    </div>
     )
 }
 
