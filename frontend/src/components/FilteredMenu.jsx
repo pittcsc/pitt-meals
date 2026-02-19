@@ -24,7 +24,6 @@ const FilterMenu = () => {
     //button for each type of filter
     const FiltersButton = ({children}) => {
         return(
-            
             <button onClick={() => addFilters(children)}>{children}</button>
         )
     }
@@ -43,10 +42,17 @@ const FilterMenu = () => {
     } </>
 
     const [filters, setFilters] = useState([])
-    const addFilters = ({newFilter}) => {
-        console.log(newFilter)
-        setFilters(filters => [...filters, newFilter])
-        console.log(filters.map(filter => filter))
+    const addFilters = (newFilter) => {
+        if(!(filters.includes(newFilter)))
+        {
+            setFilters(filters => [...filters, newFilter])
+        }else{
+            setFilters(filters => filters.map(filter => {
+                if(filter!=newFilter){
+                    return filter
+                }
+            }))
+        }
     }
 
     //wrapper component for all of the filter buttons
@@ -64,7 +70,7 @@ const FilterMenu = () => {
         return(
             <button onClick={toggle}>{children}</button>
         )
-}
+    }
 
     
     const [open, setOpen] = useState(false);
@@ -75,7 +81,7 @@ const FilterMenu = () => {
     <div>
         <MainFilterButton>Filters</MainFilterButton>
         <AllFilters>{content}</AllFilters>
-        {/* <ListOfFoods keywords = {selectedFilters}></ListOfFoods> */}
+        <ListOfFoods keywords = {filters}></ListOfFoods>
         {filters}
     </div>
     )   
