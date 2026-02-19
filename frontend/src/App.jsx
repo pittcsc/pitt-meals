@@ -1,7 +1,7 @@
 import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import FeaturedFoods from './components/FeaturedFoods'
-import FilterMenu from './components/FilteredMenu'
+import FilteredMenu from './components/FilteredMenu'
 
 function App() {
 
@@ -9,7 +9,7 @@ function App() {
   return <BrowserRouter>
       
       <Routes>
-        <Route path="/menu" element={<FilterMenu/>}></Route>
+        <Route path="/menu" element={<FilteredMenu/>}></Route>
         <Route path="/featured-foods" element={<FeaturedFoods/>}></Route> 
       </Routes>
   </BrowserRouter>

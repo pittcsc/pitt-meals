@@ -21,6 +21,13 @@ const FilteredMenu = () => {
 
 //wrapper component for filter menu
 const FilterMenu = () => {
+    //button for each type of filter
+    const FiltersButton = ({children}) => {
+        return(
+            
+            <button onClick={() => addFilters(children)}>{children}</button>
+        )
+    }
     const differentFilters = [
         {label: "Vegan"},
         {label: "Vegetarian"}, 
@@ -29,52 +36,51 @@ const FilterMenu = () => {
         {label: "Kosher"},
         {label: "Halal"},]
     
-    const [[selectedFilters], updateFilters] = useState([""])
-    const addFilters = ({newFilter}) => {
-        updateFilters(selectedFilters => selectedFilters.push(newFilter))
-    }
-
     const content = <>{
         differentFilters.map(filter => (
             <FiltersButton key={filter.label}>{filter.label}</FiltersButton>
         ))
     } </>
+
+    const [filters, setFilters] = useState([])
+    const addFilters = ({newFilter}) => {
+        console.log(newFilter)
+        setFilters(filters => [...filters, newFilter])
+        console.log(filters.map(filter => filter))
+    }
+
+    //wrapper component for all of the filter buttons
+    const AllFilters = ({open, children, addFilters}) => {
+        return (
+            <div>
+                {children}
+            </div>
+            
+        )
+    }       
+
+    //filter button
+    const MainFilterButton = ({children}) => {
+        return(
+            <button onClick={toggle}>{children}</button>
+        )
+}
+
+    
     const [open, setOpen] = useState(false);
     const toggle = () => {      
         setOpen((open) => !open)
     }
     return(
     <div>
-        <MainFilterButton toggle = {toggle} open ={open} keyword = "Filters"></MainFilterButton>
-        <AllFilters open = {open} addFilters={addFilters}>{content}</AllFilters>
-        <ListOfFoods keywords = {selectedFilters}></ListOfFoods>
+        <MainFilterButton>Filters</MainFilterButton>
+        <AllFilters>{content}</AllFilters>
+        {/* <ListOfFoods keywords = {selectedFilters}></ListOfFoods> */}
+        {filters}
     </div>
     )   
 }
 
-//filter button
-const MainFilterButton = ({toggle, open, keyword}) => {
-    return(
-        <button onClick={toggle}>{keyword}</button>
-    )
-}
-
-//wrapper component for all of the filters
-const AllFilters = ({open, children, addFilters}) => {
-    return (
-        <div addFilters = {addFilters}>
-            {children}
-        </div>
-        
-    )
-}
-
-//button for each type of filter
-const FiltersButton = ({children, addFilters}) => {
-    return(
-        <button onClick={addFilters}>{children}</button>
-    )
-}
 
 //displays all of the foods
 const ListOfFoods = ({keywords}) => {
