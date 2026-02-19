@@ -22,6 +22,7 @@ REQUEST_HEADERS = {
 
 @app.route("/")
 def menu():
+    get_protein_sources
     return "<p>test</p>"
 
 
@@ -67,28 +68,45 @@ def get_protein_sources() -> dict:
     Gets all high-protein items for a give meal period (10g protein or more per 100 calories)
     ;return: list of all high-protein items as dicts specifying calories, portion, nutrients, id, customAllergens, nutrients, and location
     """
+    date = datetime.today().strftime('%Y-%m-%d')
+    url = f"https://apiv4.dineoncampus.com/locations/6779562d351d53052c3b5728/menu?date={date}&period=6992ce0d54c66406ba4ce409"
+    
+    response = requests.get(url)
+    print("Status code:", response.status_code)
+    print("Response content:", response.text)
+    if(response.status_code == 200 and response.text.strip()):
+            data = response.json()
+    else:
+         return {"error": "Failed to fetch data from the API"}
+    print(data)
+
+    high_protein_items = []
+    categories = data.get('period', {}).get("categories", [])
+    for category in categories:
+        items = category.get("items", [])
+        for item in items:
+            nutrients = item.get("nutrients", [])
+            protein = 0
+            calories = 0
+            for nutrient in nutrients:
+                if nutrient.get("name") == "Protein":
+                    protein = float(nutrient.get("value", 0))
+                elif nutrient.get("name") == "Calories":
+                    calories = float(nutrient.get("value", 0))
+            if calories > 0 and protein >= 10 * (calories / 100):
+                high_protein_items.append({
+                    "protein": protein,
+                    "portion": item.get("portion", ""),
+                    "calories": calories,
+                    "location": item.get("location", ""),
+                    "nutrients": nutrients,
+                    "customAllergens": item.get("customAllergens", []),
+                    "id": item.get("id", ""),
+        })
 
     # TODO: Jayson
 
-    return {
-        "example1": {
-            "protein": 10,
-            "portion": "100ml",
-            "calories": 100,
-            "location": "eatery",
-            "nutrients": {},
-            "customAllergens": [],
-        },
-        "example2": {
-            "protein": 12,
-            "portion": "2oz",
-            "calories": 100,
-            "location": "eatery",
-            "nutrients": {},
-            "customAllergens": [],
-        },
-    }
-
+    return high_protein_items
 
 @app.route("/carbs")
 def get_carb_sources() -> dict:
@@ -117,3 +135,5 @@ def get_carb_sources() -> dict:
             "customAllergens": [],
         },
     }
+if __name__ == "__main__":
+    app.run(debug=True)
