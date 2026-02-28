@@ -1,6 +1,7 @@
 from flask import Flask
 import requests
 from datetime import datetime
+from flask import jsonify
 
 app = Flask(__name__)
 
@@ -29,14 +30,102 @@ def menu():
 
 
 @app.route("/menu/<filters>")
-def get_menu(filters: list[str]) -> list[dict]:
+def get_menu(filters: str):
     """
     Gets all food items for a given meal period
     :param filters: list of given filters, when applied should return object only with applicable foods
     ;return: list of all items as dicts specifying calories, portion, nutrients, id, customAllergens, nutrients, and location
     """
+    # Get current date
+    curr_date = datetime.today().strftime('%Y-%m-%d')
+    
+    # Get meal period from filters
+    seperate_filters = filters.split(",")
+
+    # Set default meal period to breakfast if user doesn't specify
+    meal_period = "breakfast"
+    
+    # Itererate through filters, checking if it is a valid meal period, if so set store that value as the meal period
+    for i in seperate_filters:
+        i = i.strip().lower()
+        if i in ["breakfast", "lunch", "dinner"]:
+            meal_period = i
+    
+    # GET Request to LOCATIONS_URL to get all locations
+    location_request = requests.get(LOCATIONS_URL, headers=REQUEST_HEADERS)
+    
+    # Throw error if request was unsuccessful
+    location_request.raise_for_status()
+
+    # Convert json response to a python data structures
+    location_data = location_request.json()
+    
+    # Get list of all locations from the data
+    locations_list = location_data["locations"]
+
+    eatery = None
+
+    # Find the eatery in the list of locations, if it doesn't exist throw an error
+    for loc in locations_list:
+        if loc.get("name") == "The Eatery":
+            eatery = loc
+            break
+
+    if not eatery:
+        return jsonify({"error": "Eatery not found"}), 404
+    
+    eatery_id = eatery["id"]
+    
+    
+    # GET request to PERIODS_URL to get all meal periods for the eatery, then find the meal period specified by the user, if it doesn't exist throw an error
+    period_url = PERIODS_URL.format(location_id=eatery_id, date_str=curr_date)
+    period_request = requests.get(period_url, headers=REQUEST_HEADERS)
+    period_request.raise_for_status()
+    period_data = period_request.json()
+
+    periods_list = period_data.get("periods", [])
+
+    period = None
+    for p in periods_list:
+        if p.get("name", "").strip().lower() == meal_period:
+            period = p
+            break
+    
+    if not period:
+        return jsonify({"error": f"{meal_period} period not found for eatery"}), 404
+    
+    period_id = period["id"]
+
+    # GET request to menu url to get all menu items for the eatery and meal period, then return the data as list of dicts
+    menu_url = f"https://apiv4.dineoncampus.com/locations/{eatery_id}/menu?date={curr_date}&period={period_id}"
+    menu_request = requests.get(menu_url, headers=REQUEST_HEADERS)
+    menu_request.raise_for_status()
+    menu_data = menu_request.json()
+
+    categories = menu_data.get("period", {}).get("categories", [])
+    
+    # Iterate through all categories and items, storing items in a dictionary with item id as key to avoid duplicates, then return the values of the dictionary as a list
+    items_by_id = {}
+    for cat in categories:
+        for item in cat.get("items", []):
+            item_id = item.get("id")
+            if not item_id:
+                continue
+            items_by_id[item_id] = {
+                "name": item.get("name"),
+                "calories": item.get("calories"),
+                "portion": item.get("portion"),
+                "nutrients": item.get("nutrients", []),
+                "id": item_id,
+                "customAllergens": item.get("customAllergens", []),
+                "location": {"id": eatery_id, "name": eatery.get("name")}
+            }
+
+    return jsonify(list(items_by_id.values()))
+
+
     # TODO: Aarav
-    return {}
+    
 
 
 @app.route("/fiber")
