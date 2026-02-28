@@ -1,14 +1,16 @@
 import './App.css'
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import FeaturedFoods from './components/FeaturedFoods'
-import FilterMenu from './components/FilteredMenu'
+import FilteredMenu from './components/FilteredMenu'
 
 function App() {
 
 
   return <BrowserRouter>
-    <Route path="/menu"></Route>
-    <Route path="/featured-foods"></Route>
+    <Routes>
+      <Route path="/filtered-menu" element={<FilteredMenu/>}></Route>
+      <Route path="/featured-foods" element={<FeaturedFoods/>}></Route>
+    </Routes>
   </BrowserRouter>
     
   
