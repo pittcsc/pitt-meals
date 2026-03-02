@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {use, useEffect, useState} from "react"
 import mockData from "../../mockData/menu.json"
 
 const FilteredMenu = () => {
@@ -87,23 +87,47 @@ const FilterMenu = () => {
 
 //displays all of the foods
 const ListOfFoods = ({keywords}) => {
-    return (
-        <>  
-            {
+    const [goodFoods, setGoodFoods] = useState([])
+    useEffect(() => {
+        var tempGoodFoods = []
+        mockData.map((food, index) => {
+            var contains = true
+            keywords.forEach(keyword => {
+                if(!(food.customAllergens.includes(keyword))) {
+                    contains = false;
+                }
+            });
+            if(contains)
+                {tempGoodFoods.push(food)}
+        })
+        setGoodFoods(goodFoods => tempGoodFoods)
+        
+    }, [keywords])
+    const FoodItem = ({food}) => {
+        const capitalize = (food) => {
+            return String(food).charAt(0).toUpperCase() + String(food).slice(1)
+        }
+        const AccordionWrapper = () => {
+            return (
+                <div>{capitalize(food.name)}</div>
+            )
+        }
+        const AccordionItems = () => {
 
-                mockData.map((food, index) => {
-                    var contains = true
-                    keywords.forEach(keyword => {
-                        if(!(food.customAllergens.includes(keyword))) {
-                            contains = false;
-                        }
-                    });
-                    if(contains){
-                        return(<div key = {index}>{food.name}</div>)
-                    }
-                })
-            }
-        </>
+        }
+        return(
+            <>
+                <AccordionWrapper food = {food}/>
+            </>
+        )
+    }
+    return (
+        <div className="grid grid-cols-4 gap-4">
+            {goodFoods.map((food, index) => (
+                <FoodItem food = {food} key = {index}></FoodItem>
+                
+            ))}
+        </div>
     )
 }
 export default FilteredMenu
