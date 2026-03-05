@@ -104,25 +104,44 @@ const ListOfFoods = ({keywords}) => {
         
     }, [keywords])
     const FoodItem = ({food}) => {
+        const [open, setOpen] = useState(false)
+        const toggle = () => {
+            setOpen(open=>!open)
+            console.log("toggled")
+        }
         const capitalize = (food) => {
             return String(food).charAt(0).toUpperCase() + String(food).slice(1)
         }
         const AccordionWrapper = () => {
+            
             return (
-                <div>{capitalize(food.name)}</div>
+                <>
+                    <div onClick={toggle}>{capitalize(food.name)}</div>
+                </>
+
             )
         }
         const AccordionItems = () => {
-
+            return(
+                <>
+                    <div>Location: {food.location}</div>
+                    <div>Fiber: {food.fiber}</div>
+                    <div>Portion: {food.portion}</div>
+                    <div>Calories: {food.calories}</div>
+                </>
+            )
         }
         return(
             <>
-                <AccordionWrapper food = {food}/>
+                <AccordionWrapper/>
+                <AccordionItems/>
             </>
         )
     }
     return (
-        <div className="grid grid-cols-4 gap-4">
+        
+        <div>
+            <p className="text-red-500">red text</p>
             {goodFoods.map((food, index) => (
                 <FoodItem food = {food} key = {index}></FoodItem>
                 
