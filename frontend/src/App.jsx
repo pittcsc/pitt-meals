@@ -9,9 +9,8 @@ function App() {
 
   return <BrowserRouter>
     <Routes>
-      <Route path="/filtered-menu" element={<FilteredMenu/>}></Route>
+      <Route path="/filtered-menu" element={<FilterMenu/>}></Route>
       <Route path="/featured-foods" element={<FeaturedFoods/>}></Route>
-      <Route path="/menu" element={<FilterMenu/>}></Route>
     </Routes>
   </BrowserRouter>
     
