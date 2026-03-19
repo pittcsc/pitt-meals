@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, json
 import requests
 from datetime import datetime
 
@@ -68,17 +68,19 @@ def get_protein_sources() -> dict:
     Gets all high-protein items for a give meal period (10g protein or more per 100 calories)
     ;return: list of all high-protein items as dicts specifying calories, portion, nutrients, id, customAllergens, nutrients, and location
     """
-    date = datetime.today().strftime('%Y-%m-%d')
-    url = f"https://apiv4.dineoncampus.com/locations/6779562d351d53052c3b5728/menu?date={date}&period=6992ce0d54c66406ba4ce409"
+    # date = datetime.today().strftime('%Y-%m-%d')
+    # url = f"https://apiv4.dineoncampus.com/locations/6779562d351d53052c3b5728/menu?date={date}&period=6992ce0d54c66406ba4ce409"
     
-    response = requests.get(url)
-    print("Status code:", response.status_code)
-    print("Response content:", response.text)
-    if(response.status_code == 200 and response.text.strip()):
-            data = response.json()
-    else:
-         return {"error": "Failed to fetch data from the API"}
-    print(data)
+    # response = requests.get(url)
+    # print("Status code:", response.status_code)
+    # print("Response content:", response.text)
+    # if(response.status_code == 200 and response.text.strip()):
+    #         data = response.json()
+    # else:
+    #      return {"error": "Failed to fetch data from the API"}
+    # print(data)
+    with open('../mock-data/breakfast.json') as file:
+        data = json.load(file)
 
     high_protein_items = []
     categories = data.get('period', {}).get("categories", [])
@@ -89,10 +91,18 @@ def get_protein_sources() -> dict:
             protein = 0
             calories = 0
             for nutrient in nutrients:
-                if nutrient.get("name") == "Protein":
-                    protein = float(nutrient.get("value", 0))
+                if nutrient.get("name") == "Protein (g)":
+                    protein_value = nutrient.get("value", 0)
+                    try:
+                        protein = float(protein_value)
+                    except (ValueError, TypeError):
+                        protein = 0
                 elif nutrient.get("name") == "Calories":
-                    calories = float(nutrient.get("value", 0))
+                    calories_value = nutrient.get("value", 0)
+                    try:
+                        calories = float(calories_value)
+                    except (ValueError, TypeError):
+                        calories = 0
             if calories > 0 and protein >= 10 * (calories / 100):
                 high_protein_items.append({
                     "protein": protein,
@@ -101,7 +111,7 @@ def get_protein_sources() -> dict:
                     "location": item.get("location", ""),
                     "nutrients": nutrients,
                     "customAllergens": item.get("customAllergens", []),
-                    "id": item.get("id", ""),
+                    "name": item.get("name", "")
         })
 
     # TODO: Jayson
