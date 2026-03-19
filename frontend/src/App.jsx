@@ -1,7 +1,6 @@
 import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import FeaturedFoods from './components/FeaturedFoods'
-import FilteredMenu from './components/FilteredMenu'
 import FilterMenu from './components/FilterMenu/FilterMenu'
 
 function App() {
