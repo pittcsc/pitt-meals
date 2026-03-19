@@ -1,1 +1,54 @@
-{}
+{
+    "example1": {
+            "protein": 10,
+            "carbs": 25,
+            "fiber": 2,
+            "portion": "100ml",
+            "calories": 500,
+            "location": "eatery",
+            "nutrients": {},
+            "customAllergens": []
+        },
+    "example2": {
+        "protein": 12,
+        "carbs": 8,
+        "fiber": 12,
+        "portion": "2oz",
+        "calories": 200,
+        "location": "eatery",
+        "nutrients": {},
+        "customAllergens": []
+    },
+    "example3": {
+            "protein": 20,
+            "carbs": 13,
+            "fiber": 4,
+            "portion": "30g",
+            "calories": 150,
+            "location": "eatery",
+            "nutrients": {},
+            "customAllergens": []
+    },
+    "example4": {
+        "protein": 10,
+        "carbs": 10,
+        "fiber": 9,
+        "portion": "2oz",
+        "calories": 190,
+        "location": "eatery",
+        "nutrients": {},
+        "customAllergens": []
+    },
+    "example5": {
+            "protein": 6,
+            "carbs": 2,
+            "fiber": 2,
+            "portion": "2oz",
+            "calories": 360,
+            "location": "eatery",
+            "nutrients": {},
+            "customAllergens": []
+        },
+    "example6": {"protein": 16, "carbs": 20, "fiber": 6, "portion": "100g", "calories": 50}
+}
+
