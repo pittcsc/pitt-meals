@@ -1,1 +1,75 @@
-{}
+
+[
+    {
+        "name": "bad for any restrictions",
+        "fiber": "6",
+        "portion": "2oz",
+        "calories": "100",
+        "location": "eatery",
+        "nutrients": {},
+        "customAllergens": [""]
+    },
+    {
+        "name": "halal food",
+        "fiber": "6",
+        "portion": "2oz",
+        "calories": "100",
+        "location": "eatery",
+        "nutrients": {},
+        "customAllergens": ["","Halal"]
+    },
+    {
+        "name": "gluten free food",
+        "fiber": "6",
+        "portion": "2oz",
+        "calories": "100",
+        "location": "eatery",
+        "nutrients": {},
+        "customAllergens": ["","Gluten-Free", "Halal"]
+    },
+    {
+        "name": "dairy free food",
+        "fiber": "6",
+        "portion": "2oz",
+        "calories": "100",
+        "location": "eatery",
+        "nutrients": {},
+        "customAllergens": [""]
+    }, 
+    {
+        "name": "vegan food",
+        "fiber": "6",
+        "portion": "2oz",
+        "calories": "100",
+        "location": "eatery",
+        "nutrients": {},
+        "customAllergens": ["","Vegan", "Vegetarian"]
+    },
+    {
+        "name": "high protein food",
+        "fiber": "6",
+        "portion": "2oz",
+        "calories": "100",
+        "location": "eatery",
+        "nutrients": {},
+        "customAllergens": ["","High-Protein"]
+    },
+    {
+        "name": "kosher food",
+        "fiber": "6",
+        "portion": "2oz",
+        "calories": "100",
+        "location": "eatery",
+        "nutrients": {},
+        "customAllergens": ["", "Kosher"]
+    },
+    {
+        "name": "vegetarian food",
+        "fiber": "6",
+        "portion": "2oz",
+        "calories": "100",
+        "location": "eatery",
+        "nutrients": {},
+        "customAllergens": ["","Vegetarian", "Halal"]
+    }
+]
