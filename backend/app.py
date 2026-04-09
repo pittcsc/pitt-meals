@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 import requests
 from datetime import datetime
+import cloudscraper
 import json
 import os
 
@@ -18,7 +19,7 @@ LOCATIONS_URL = "https://api.dineoncampus.com/v1/locations/status?site_id=5e6fcc
 PERIODS_URL = "https://api.dineoncampus.com/v1/location/{location_id}/periods?platform=0&date={date_str}"
 
 REQUEST_HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
+    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36"
 }
 
 
@@ -168,18 +169,49 @@ def get_fiber_sources() -> list[dict]:
     """
 
     # TODO: Vincent
+    scraper = cloudscraper.create_scraper() 
+    date = datetime.today().strftime('%Y-%m-%d')
+    url = f"https://apiv4.dineoncampus.com/locations/6779562d351d53052c3b5728/menu?date={date}&period=69a64f35492f9a9e2e4c1db5"
+    
+    # Make the request to the API and parse the JSON response
+    fiber_request = scraper.get(url, headers=REQUEST_HEADERS)
+    fiber_request.raise_for_status()  
+    data = fiber_request.json()
+    high_fiber = []
 
-    return {
-        "example1": {
-            "fiber": 6,
-            "portion": "2oz",
-            "calories": 100,
-            "location": "eatery",
-            "nutrients": {},
-            "customAllergens": [],
-        },
-        "example2": {"fiber": 10, "portion": "100g", "calories": 100},
-    }
+    # Loop through nested objects
+    categories = data.get("period", {}).get("categories", [])
+
+    # Loop through categories and then items to find high fiber foods
+    for category in categories:
+        for item in category.get("items", []):
+            fiber = 0
+            calories = item.get("calories", 0)
+            nutrients = item.get("nutrients", [])
+
+            # Retrieve nutrients and check for dietary fiber
+            for nutrient in nutrients:
+                if nutrient.get("name", "").lower() == "dietary fiber (g)":
+                    # For cases where grams are marked as "less than 1 gram"
+                    try:
+                        fiber = float(nutrient.get("value", 0))
+                    except ValueError:
+                        fiber = 0
+                    break
+
+            # Append if the item is high fiber (3g or more per 100 calories)
+            if (calories > 0) and (fiber >= 3 * (calories / 100)):
+                high_fiber.append({
+                    "name": item.get("name", ""),
+                    "fiber": fiber,
+                    "portion": item.get("portion", ""),
+                    "calories": calories,
+                    "location": "The Eatery",
+                    "nutrients": nutrients,
+                    "customAllergens": item.get("customAllergens", []),
+                })
+                
+    return high_fiber
 
 
 @app.route("/protein")
